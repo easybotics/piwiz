@@ -375,7 +375,7 @@ static void message (char *msg, int wait, int dest_page, int prog, gboolean puls
         GdkColor col;
 
         builder = gtk_builder_new ();
-        gtk_builder_add_from_file (builder, PACKAGE_DATA_DIR "/piwiz.ui", NULL);
+        gtk_builder_add_from_file (builder, "piwiz.ui", NULL);
 
         msg_dlg = (GtkWidget *) gtk_builder_get_object (builder, "msg");
         gtk_window_set_modal (GTK_WINDOW (msg_dlg), TRUE);
@@ -450,7 +450,8 @@ static gboolean ok_clicked (GtkButton *button, gpointer data)
 static gboolean loc_done (gpointer data)
 {
     hide_message ();
-    gtk_notebook_next_page (GTK_NOTEBOOK (wizard_nb));
+   // gtk_notebook_next_page (GTK_NOTEBOOK (wizard_nb));
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (wizard_nb), PAGE_DONE);
     return FALSE;
 }
 
@@ -1193,7 +1194,7 @@ static void next_page (GtkButton* btn, gpointer ptr)
                                 message (_("Setting location - please wait..."), 0, 0, -1, TRUE);
                                 g_thread_new (NULL, set_locale, NULL);
                             }
-                            else gtk_notebook_set_current_page (GTK_NOTEBOOK (wizard_nb), PAGE_PASSWD);
+                            else gtk_notebook_set_current_page (GTK_NOTEBOOK (wizard_nb), PAGE_DONE);
                             break;
 
         case PAGE_PASSWD :  escape_passwd (gtk_entry_get_text (GTK_ENTRY (pwd1_te)), &pw1);
@@ -1370,7 +1371,7 @@ int main (int argc, char *argv[])
     gdk_threads_init ();
     gdk_threads_enter ();
     gtk_init (&argc, &argv);
-    gtk_icon_theme_prepend_search_path (gtk_icon_theme_get_default(), PACKAGE_DATA_DIR);
+    // gtk_icon_theme_prepend_search_path (gtk_icon_theme_get_default(), PACKAGE_DATA_DIR);
 
     // create the master databases
     locale_list = gtk_list_store_new (5, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
@@ -1379,7 +1380,7 @@ int main (int argc, char *argv[])
 
     // build the UI
     builder = gtk_builder_new ();
-    gtk_builder_add_from_file (builder, PACKAGE_DATA_DIR "/piwiz.ui", NULL);
+    gtk_builder_add_from_file (builder, "piwiz.ui", NULL);
 
     msg_dlg = NULL;
     main_dlg = (GtkWidget *) gtk_builder_get_object (builder, "wizard_dlg");
