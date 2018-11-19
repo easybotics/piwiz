@@ -1115,7 +1115,8 @@ static void page_changed (GtkNotebook *notebook, GtkNotebookPage *page, int page
         case PAGE_INTRO :   gtk_button_set_label (GTK_BUTTON (prev_btn), _("_Cancel"));
                             break;
 
-        case PAGE_DONE :    if (reboot)
+        case PAGE_DONE :	gtk_widget_set_visible (prev_btn, FALSE); 
+							if (reboot)
                             {
                                 gtk_widget_show (prompt);
                                 gtk_button_set_label (GTK_BUTTON (next_btn), _("_Reboot"));
